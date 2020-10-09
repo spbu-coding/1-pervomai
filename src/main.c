@@ -9,7 +9,7 @@ struct interval_t {
     double right_b;
 };
 
-double midpoint_rule (double left_b, double right_b, int amount_squares){
+double calculate_midpoint_rule (double left_b, double right_b, int amount_squares){
     double sum = 0;
     double change = (right_b - left_b) / amount_squares;
     double left = left_b;
@@ -22,7 +22,7 @@ double midpoint_rule (double left_b, double right_b, int amount_squares){
     return sum;
 }
 
-double simpson_rule (double left_b, double right_b, int amount_squares){
+double calculate_simpson_rule (double left_b, double right_b, int amount_squares){
     double sum = 0;
     double change = (right_b - left_b) / amount_squares;
     double left = left_b;
@@ -43,14 +43,14 @@ int reading_intervals(double *left_b, double *right_b){
         return -1;
     }
     if (*left_b > M_PI){
-        error("Value of left border must be less or equal then 3.14");
+        error("Value of left border must be less or equal than %f\n",M_PI);
         return -1;
     }
 
     printf("Enter right border of interval: ");
     scanf("%lf", right_b);
     if (*right_b > M_PI){
-        error("Value of right border must be less or equal than 3,14\n");
+        error("Value of right border must be less or equal than %f\n",M_PI);
         return -1;
     }
     if (*right_b < 0){
@@ -75,8 +75,8 @@ int main() {
     size = sizeof(amount_squares) / sizeof(amount_squares[0]);
     printf("Results: \n");
     for (int i = 0; i < size; ++i) {
-        double sum1 = midpoint_rule(interval.left_b,interval.right_b,amount_squares[i]);
-        double sum2 = simpson_rule(interval.left_b,interval.right_b,amount_squares[i]);
+        double sum1 = calculate_midpoint_rule(interval.left_b,interval.right_b,amount_squares[i]);
+        double sum2 = calculate_simpson_rule(interval.left_b,interval.right_b,amount_squares[i]);
         printf("%d %.5lf %.5lf\n",amount_squares[i], sum1, sum2);
     }
     return 0;
